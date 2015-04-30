@@ -23,8 +23,9 @@ public class PersonServiceAdvice implements MethodBeforeAdvice {
 
     @Override
     public void before(Method method, Object[] os, Object o) throws Throwable {
-        PersonServiceAccess accessRecord = new PersonServiceAccess();
+        PersonServiceAccess accessRecord = null;
         if(method.getName().equals("getPerson")){        
+            accessRecord = new PersonServiceAccess();
             accessRecord.setPersonId((Integer)os[0]);
             accessRecord.setAccessType("Get Person");
 //            for(int i=0; i < os.length; i++){
@@ -39,11 +40,13 @@ public class PersonServiceAdvice implements MethodBeforeAdvice {
             Context.getService(PersonAccessService.class).savePersonServiceAccess(accessRecord);
             
         } else if(method.getName().equals("getPersonByUuid")){
+            accessRecord = new PersonServiceAccess();
             accessRecord.setPersonUuid((String)os[0]);
             accessRecord.setAccessType("Get Person By Uuid");
             Context.getService(PersonAccessService.class).savePersonServiceAccess(accessRecord);
         
         } else if(method.getName().equals("savePerson")){
+            accessRecord = new PersonServiceAccess();
             Person person = (Person)os[0];
             accessRecord.setPersonId(person.getId());
             if(person.getId()==null){
@@ -53,16 +56,19 @@ public class PersonServiceAdvice implements MethodBeforeAdvice {
             }
             Context.getService(PersonAccessService.class).savePersonServiceAccess(accessRecord);
         } else if(method.getName().equals("purgePerson")){
+            accessRecord = new PersonServiceAccess();
             Person person = (Person)os[0];
             accessRecord.setPersonId(person.getId());
             accessRecord.setAccessType("Purge Person");
             Context.getService(PersonAccessService.class).savePersonServiceAccess(accessRecord);
         } else if(method.getName().equals("unvoidPerson")){
+            accessRecord = new PersonServiceAccess();
             Person person = (Person)os[0];
             accessRecord.setPersonId(person.getId());
             accessRecord.setAccessType("Un-void Person");
             Context.getService(PersonAccessService.class).savePersonServiceAccess(accessRecord);
         } else if(method.getName().equals("voidPerson")){
+            accessRecord = new PersonServiceAccess();
             Person person = (Person)os[0];
             accessRecord.setPersonId(person.getId());
             accessRecord.setAccessType("Void Person");

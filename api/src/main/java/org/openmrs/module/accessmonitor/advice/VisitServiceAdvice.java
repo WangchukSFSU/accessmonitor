@@ -27,9 +27,10 @@ public class VisitServiceAdvice implements MethodBeforeAdvice {
     @Override
     public void before(Method method, Object[] args, Object target) throws Throwable {
         
-        VisitServiceAccess accessRecord = new VisitServiceAccess();
+        VisitServiceAccess accessRecord = null;
         
         if(method.getName().equals("getVisit")){        
+            accessRecord = new VisitServiceAccess();
             accessRecord.setVisitId((Integer)args[0]);
             accessRecord.setAccessType("Get Visit");
             //for(int i=0; i < args.length; i++){
@@ -47,6 +48,7 @@ public class VisitServiceAdvice implements MethodBeforeAdvice {
         } 
         else if(method.getName().equals("getVisitByUuid")){
 //            accessRecord.setVisitUuid((String)args[0]);
+            accessRecord = new VisitServiceAccess();
             accessRecord.setAccessType("Get Visit By Uuid");
             
 //            System.out.println("Accessor ID: " + accessRecord.getAccessorId()); 
@@ -58,6 +60,7 @@ public class VisitServiceAdvice implements MethodBeforeAdvice {
             Context.getService(VisitAccessService.class).saveVisitServiceAccess(accessRecord);
         } 
         else if(method.getName().equals("saveVisit")){
+            accessRecord = new VisitServiceAccess();
             Visit visit = (Visit)args[0];
             accessRecord.setVisitId(visit.getId());
             if(visit.getId()==null){
@@ -67,6 +70,7 @@ public class VisitServiceAdvice implements MethodBeforeAdvice {
             }
             Context.getService(VisitAccessService.class).saveVisitServiceAccess(accessRecord);
         } else if(method.getName().equals("purgeVisit")){
+            accessRecord = new VisitServiceAccess();
             Visit visit = (Visit)args[0];
             accessRecord.setVisitId(visit.getId());
             accessRecord.setAccessType("Purge Visit");
@@ -84,11 +88,13 @@ public class VisitServiceAdvice implements MethodBeforeAdvice {
 //            System.out.println("Visit End Date: " + accessRecord.getVisitEndDate());
 //            Context.getService(VisitAccessService.class).saveVisitServiceAccess(accessRecord);
         } else if(method.getName().equals("unvoidVisit")){
+            accessRecord = new VisitServiceAccess();
             Visit visit = (Visit)args[0];
             accessRecord.setVisitId(visit.getId());
             accessRecord.setAccessType("Un-void Visit");
             Context.getService(VisitAccessService.class).saveVisitServiceAccess(accessRecord);
         } else if(method.getName().equals("voidVisit")){
+            accessRecord = new VisitServiceAccess();
             Visit visit = (Visit)args[0];
             accessRecord.setVisitId(visit.getId());
             accessRecord.setAccessType("Void Visit");
