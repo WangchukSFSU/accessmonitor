@@ -7,7 +7,6 @@ package org.openmrs.module.accessmonitor.advice;
  */
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Person;

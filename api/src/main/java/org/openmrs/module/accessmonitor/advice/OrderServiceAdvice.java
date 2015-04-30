@@ -10,8 +10,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Order;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.aoptest.OrderServiceAccess;
-import org.openmrs.module.aoptest.api.OrderAccessService;
+import org.openmrs.module.accessmonitor.OrderServiceAccess;
+import org.openmrs.module.accessmonitor.api.OrderAccessService;
 import org.springframework.aop.MethodBeforeAdvice;
 
 /**

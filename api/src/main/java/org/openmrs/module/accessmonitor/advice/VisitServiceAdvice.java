@@ -10,13 +10,12 @@ package org.openmrs.module.accessmonitor.advice;
  * @author xuejing
  */
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Visit;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.aoptest.VisitServiceAccess;
-import org.openmrs.module.aoptest.api.VisitAccessService;
+import org.openmrs.module.accessmonitor.VisitServiceAccess;
+import org.openmrs.module.accessmonitor.api.VisitAccessService;
 import org.springframework.aop.MethodBeforeAdvice;
 
 
