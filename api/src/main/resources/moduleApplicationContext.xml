@@ -18,6 +18,101 @@
   		    http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 	<!-- Add here beans related to the API context -->
+	<!-- Services accessible via Context.getService() -->
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>${project.parent.groupId}.${project.parent.artifactId}.api.PersonAccessService</value>
+				<bean
+					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+					<property name="transactionManager">
+						<ref bean="transactionManager" />
+					</property>
+					<property name="target">
+						<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.PersonAccessServiceImpl">
+							<property name="dao">
+								<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernatePersonAccessDAO">
+									<property name="sessionFactory">
+										<ref bean="sessionFactory" />
+									</property>
+								</bean>
+							</property>
+						</bean>
+					</property>
+					<property name="preInterceptors">
+						<ref bean="serviceInterceptors" />
+					</property>
+					<property name="transactionAttributeSource">
+						<ref bean="transactionAttributeSource" />
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+        
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>${project.parent.groupId}.${project.parent.artifactId}.api.VisitAccessService</value>
+				<bean
+					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+					<property name="transactionManager">
+						<ref bean="transactionManager" />
+					</property>
+					<property name="target">
+						<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.VisitAccessServiceImpl">
+							<property name="dao">
+								<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateVisitAccessDAO">
+									<property name="sessionFactory">
+										<ref bean="sessionFactory" />
+									</property>
+								</bean>
+							</property>
+						</bean>
+					</property>
+					<property name="preInterceptors">
+						<ref bean="serviceInterceptors" />
+					</property>
+					<property name="transactionAttributeSource">
+						<ref bean="transactionAttributeSource" />
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+        
+	
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>${project.parent.groupId}.${project.parent.artifactId}.api.OrderAccessService</value>
+				<bean
+					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+					<property name="transactionManager">
+						<ref bean="transactionManager" />
+					</property>
+					<property name="target">
+						<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.OrderAccessServiceImpl">
+							<property name="dao">
+								<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateOrderAccessDAO">
+									<property name="sessionFactory">
+										<ref bean="sessionFactory" />
+									</property>
+								</bean>
+							</property>
+						</bean>
+					</property>
+					<property name="preInterceptors">
+						<ref bean="serviceInterceptors" />
+					</property>
+					<property name="transactionAttributeSource">
+						<ref bean="transactionAttributeSource" />
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	
 </beans>

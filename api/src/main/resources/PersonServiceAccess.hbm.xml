@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.accessmonitor">
+
+<!--
+	<class name="OrderAccess"
+		table="${project.parent.artifactId}_OrderAccess">
+		<id name="id" type="int" column="id" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		<discriminator column="id" insert="false" />
+		<property name="uuid" type="java.lang.String" column="uuid"
+			length="38" unique="true" />
+	</class>
+-->
+	<class name="PersonServiceAccess" table="person_access">
+		<id name="personAccessId" type="int" column="person_access_id" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		<discriminator column="person_access_id" insert="false" />
+		<property name="accessorId" type="int" column="accessor_id" ></property>
+		<property name="personId" type="int" column="person_id" ></property>
+		<property name="personType" type="java.lang.String" column="person_type" ></property>
+		<property name="accessType" type="java.lang.String" column="access_type" ></property>
+		<property name="personUuid" type="java.lang.String" column="person_uuid"
+						length="38" unique="true" />
+		<property name="voidReason" type="java.lang.String" column="void_reason" ></property>
+        <property name="accessDate" type="java.util.Date" column="access_date" ></property>
+        
+	</class>
+
+</hibernate-mapping>

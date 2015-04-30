@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <!--
+        See http://www.liquibase.org/manual/home#available_database_refactorings
+        for a list of supported elements and attributes
+    -->
+    
+    
+    <changeSet id="personaccess-1" author="gautschi">
+        <sql>
+            drop table if exists person_access;
+        </sql>
+    </changeSet>
+
+    <changeSet id="personaccess-2" author="gautschi">
+        <preConditions onFail="WARN" onError="WARN">
+            <not>
+                <tableExists tableName="person_access" />
+            </not>
+        </preConditions>
+        <createTable tableName="person_access">
+            <column name="person_access_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="accessor_id" type="int"></column>
+            <column name="person_id" type="int"></column>
+            <column name="person_type" type="varchar(255)"></column>
+            <column name="access_type" type="varchar(255)"></column>
+            <column name="person_uuid" type="varchar(255)"></column>
+            <column name="void_reason" type="varchar(255)"></column>
+            <column name="access_date" type="datetime"></column>
+            
+        </createTable>
+    </changeSet>
+    
+    
+    <changeSet id="visitaccess-1" author="gautschi">
+        <sql>
+            drop table if exists visit_access;
+        </sql>
+    </changeSet>
+
+    <changeSet id="visitaccess-2" author="gautschi">
+        <preConditions onFail="WARN" onError="WARN">
+            <not>
+                <tableExists tableName="visit_access" />
+            </not>
+        </preConditions>
+        <createTable tableName="visit_access">
+            <column name="visit_access_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="accessor_id" type="int"></column>
+            <column name="patient_id" type="int"></column>
+            <column name="visit_id" type="int"></column>
+            <column name="visit_type" type="varchar(255)"></column>
+            <column name="access_type" type="varchar(255)"></column>
+            <column name="visit_uuid" type="varchar(255)"></column>
+            <column name="void_reason" type="varchar(255)"></column>
+            <column name="access_date" type="datetime"></column>
+            <column name="visit_start_date" type="datetime"></column>
+            <column name="visit_end_date" type="datetime"></column>
+            
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="orderaccess-1" author="gautschi">
+        <sql>
+            drop table if exists order_access;
+        </sql>
+    </changeSet>
+
+    <changeSet id="orderaccess-2" author="gautschi">
+        <preConditions onFail="WARN" onError="WARN">
+            <not>
+                <tableExists tableName="order_access" />
+            </not>
+        </preConditions>
+        <createTable tableName="order_access">
+            <column name="order_access_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="accessor_id" type="int"></column>
+            <column name="patient_id" type="int"></column>
+            <column name="user_id" type="int"></column>
+            <column name="order_id" type="int"></column>
+            <column name="order_type" type="varchar(255)"></column>
+            <column name="access_type" type="varchar(255)"></column>
+            <column name="order_uuid" type="varchar(255)"></column>
+            <column name="access_date" type="datetime"></column>
+            
+        </createTable>
+    </changeSet>
+    
+    
+</databaseChangeLog>

@@ -26,9 +26,27 @@
 		<class>${project.parent.groupId}.${project.parent.artifactId}.extension.html.AdminList</class>
 	</extension>
 	
+	<!-- Add advice -->
+	<advice>
+        <point>org.openmrs.api.PersonService</point>
+        <class>${project.parent.groupId}.${project.parent.artifactId}.advice.PersonServiceAdvice</class>
+    </advice>
+    
+    <advice>
+        <point>org.openmrs.api.OrderService</point>
+        <class>${project.parent.groupId}.${project.parent.artifactId}.advice.OrderServiceAdvice</class>
+    </advice>
+    
+    <advice>
+        <point>org.openmrs.api.VisitService</point>
+        <class>${project.parent.groupId}.${project.parent.artifactId}.advice.VisitServiceAdvice</class>
+    </advice>
+	
 	<!-- Maps hibernate file's, if present -->
 	<mappingFiles>
-				
+		PersonServiceAccess.hbm.xml
+		VisitServiceAccess.hbm.xml
+		OrderServiceAccess.hbm.xml
 	</mappingFiles>
 
 	<!-- Internationalization -->

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.accessmonitor">
+
+<!--
+	<class name="OrderAccess"
+		table="${project.parent.artifactId}_OrderAccess">
+		<id name="id" type="int" column="id" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		<discriminator column="id" insert="false" />
+		<property name="uuid" type="java.lang.String" column="uuid"
+			length="38" unique="true" />
+	</class>
+-->
+	<class name="OrderServiceAccess" table="order_access">
+		<id name="orderAccessId" type="int" column="order_access_id" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		<discriminator column="order_access_id" insert="false" />
+		<property name="accessorId" type="int" column="accessor_id" ></property>
+		<property name="patientId" type="int" column="patient_id" ></property>
+		<property name="userId" type="int" column="user_id" ></property>
+		<property name="orderId" type="int" column="order_id" ></property>
+		<property name="orderType" type="java.lang.String" column="order_type" ></property>
+		<property name="accessType" type="java.lang.String" column="access_type" ></property>
+		<property name="orderUuid" type="java.lang.String" column="order_uuid"
+						length="38" unique="true" />
+        <property name="accessDate" type="java.util.Date" column="access_date" ></property> 
+        
+	</class>
+
+</hibernate-mapping>
