@@ -42,7 +42,7 @@ public class  AccessMonitorManageController {
 //		model.addAttribute("user", Context.getAuthenticatedUser());
 //	}
 	
-	@RequestMapping(value = "/module/aoptest/manage", method = RequestMethod.GET)
+	@RequestMapping(value = "/module/accessmonitor/manage", method = RequestMethod.GET)
     public void manage(ModelMap model) {
         
         List<PersonServiceAccess> tables1;
