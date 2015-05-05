@@ -18,31 +18,58 @@ import java.util.List;
 import org.openmrs.module.accessmonitor.PersonServiceAccess;
 
 /**
- *  Database methods for {@link PersonAccessService}.
+ * Database methods for {@link PersonAccessService}.
  */
 public interface PersonAccessDAO {
-	
-	/*
-	 * Add DAO methods here
-	 */
+    
+    /*
+     * Add DAO methods here
+     */
+    
+    // New methods added on 5/4/2015
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessDate(
+            Date from, Date to);
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessorId(
+            Integer accessorId, Date from, Date to);
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByPersonId(
+            Integer personId, Date from, Date to);
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByPersonUuid(
+            String personUuid, Date from, Date to);
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessType(
+            String accessType, Date from, Date to);
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByVoidReason(
+            String voidReason, Date from, Date to);
     
     public PersonServiceAccess getPersonServiceAccessById(Integer id);
-
-    public List<PersonServiceAccess> getPersonServiceAccessesByAccessorId(Integer accessorId);
     
-    public List<PersonServiceAccess> getPersonServiceAccessesByPersonId(Integer personId);
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessorId(
+            Integer accessorId);
     
-    public List<PersonServiceAccess> getPersonServiceAccessesByPersonType(String personType);
-
-    public List<PersonServiceAccess> getPersonServiceAccessesByPersonUuid(String personUuid);
-
-    public List<PersonServiceAccess> getPersonServiceAccessesByAccessType(String accessType);
+    public List<PersonServiceAccess> getPersonServiceAccessesByPersonId(
+            Integer personId);
     
-    public List<PersonServiceAccess> getPersonServiceAccessesByVoidReason(String voidReason);
-
-    public List<PersonServiceAccess> getPersonServiceAccessesByAccessDate(Date accessDate);
+    public List<PersonServiceAccess> getPersonServiceAccessesByPersonType(
+            String personType);
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByPersonUuid(
+            String personUuid);
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessType(
+            String accessType);
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByVoidReason(
+            String voidReason);
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessDate(
+            Date accessDate);
     
     public List<PersonServiceAccess> getAllPersonServiceAccesses();
-
-    public PersonServiceAccess savePersonServiceAccess(PersonServiceAccess personServiceAccess);
+    
+    public PersonServiceAccess savePersonServiceAccess(
+            PersonServiceAccess personServiceAccess);
 }

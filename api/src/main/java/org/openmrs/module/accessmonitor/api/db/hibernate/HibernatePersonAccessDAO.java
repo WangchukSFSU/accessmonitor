@@ -44,6 +44,109 @@ public class HibernatePersonAccessDAO implements PersonAccessDAO {
     public SessionFactory getSessionFactory() {
 	    return sessionFactory;
     }
+    
+    // New methods added on 5/4/2015
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessDate(
+            Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                PersonServiceAccess.class);
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessorId
+                    (Integer accessorId, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                PersonServiceAccess.class);
+        crit.add(Restrictions.eq("accessorId", accessorId));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByPersonId
+                    (Integer personId, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                PersonServiceAccess.class);
+        crit.add(Restrictions.eq("personId", personId));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+
+    public List<PersonServiceAccess> getPersonServiceAccessesByPersonUuid
+                    (String personUuid, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                PersonServiceAccess.class);
+        crit.add(Restrictions.eq("personUuid", personUuid));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessType
+                    (String accessType, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                PersonServiceAccess.class);
+        crit.add(Restrictions.eq("accessType", accessType));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByVoidReason
+                    (String voidReason, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                PersonServiceAccess.class);
+        crit.add(Restrictions.eq("voidReason", voidReason));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
 
     @Override
     public PersonServiceAccess getPersonServiceAccessById(Integer id) {

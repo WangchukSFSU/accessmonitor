@@ -25,14 +25,16 @@ import org.openmrs.module.accessmonitor.api.db.PersonAccessDAO;
 /**
  * It is a default implementation of {@link PersonAccessService}.
  */
-public class PersonAccessServiceImpl extends BaseOpenmrsService implements PersonAccessService {
+public class PersonAccessServiceImpl extends BaseOpenmrsService implements
+        PersonAccessService {
     
     protected final Log log = LogFactory.getLog(this.getClass());
     
     private PersonAccessDAO dao;
     
     /**
-     * @param dao the dao to set
+     * @param dao
+     *            the dao to set
      */
     public void setDao(PersonAccessDAO dao) {
         this.dao = dao;
@@ -44,54 +46,85 @@ public class PersonAccessServiceImpl extends BaseOpenmrsService implements Perso
     public PersonAccessDAO getDao() {
         return dao;
     }
-
+    
+    // New methods added on 5/4/2015
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessDate(
+            Date from, Date to) {
+        return dao.getPersonServiceAccessesByAccessDate(from, to);
+    }
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessorId(
+            Integer accessorId, Date from, Date to) {
+        return dao.getPersonServiceAccessesByAccessorId(accessorId, from, to);
+    }
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByPersonId(
+            Integer personId, Date from, Date to) {
+        return dao.getPersonServiceAccessesByPersonId(personId, from, to);
+    }
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByPersonUuid(
+            String personUuid, Date from, Date to) {
+        return dao.getPersonServiceAccessesByPersonUuid(personUuid, from, to);
+    }
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessType(
+            String accessType, Date from, Date to) {
+        return dao.getPersonServiceAccessesByAccessType(accessType, from, to);
+    }
+    
+    public List<PersonServiceAccess> getPersonServiceAccessesByVoidReason(
+            String voidReason, Date from, Date to) {
+        return dao.getPersonServiceAccessesByVoidReason(voidReason, from, to);
+    }
+    
     @Override
     public PersonServiceAccess getPersonServiceAccessById(Integer id) {
         return dao.getPersonServiceAccessById(id);
     }
-
-    @Override
-    public List<PersonServiceAccess> getPersonServiceAccessesByAccessorId(
-            Integer accessorId) {
-        return dao.getPersonServiceAccessesByAccessorId(accessorId);
-    }
-
+    
+    // @Override
+    // public List<PersonServiceAccess> getPersonServiceAccessesByAccessorId(
+    // Integer accessorId) {
+    // return dao.getPersonServiceAccessesByAccessorId(accessorId);
+    // }
+    
     @Override
     public List<PersonServiceAccess> getPersonServiceAccessesByPersonId(
             Integer personId) {
         return dao.getPersonServiceAccessesByPersonId(personId);
     }
-
+    
     @Override
     public List<PersonServiceAccess> getPersonServiceAccessesByPersonType(
             String personType) {
         return dao.getPersonServiceAccessesByPersonType(personType);
     }
-
+    
     @Override
     public List<PersonServiceAccess> getPersonServiceAccessesByPersonUuid(
             String personUuid) {
         return dao.getPersonServiceAccessesByPersonUuid(personUuid);
     }
-
+    
     @Override
     public List<PersonServiceAccess> getPersonServiceAccessesByAccessType(
             String accessType) {
         return dao.getPersonServiceAccessesByAccessType(accessType);
     }
-
+    
     @Override
     public List<PersonServiceAccess> getPersonServiceAccessesByVoidReason(
             String voidReason) {
         return dao.getPersonServiceAccessesByVoidReason(voidReason);
     }
-
+    
     @Override
     public List<PersonServiceAccess> getPersonServiceAccessesByAccessDate(
             Date accessDate) {
         return dao.getPersonServiceAccessesByAccessDate(accessDate);
     }
-
+    
     @Override
     public List<PersonServiceAccess> getAllPersonServiceAccesses() {
         return dao.getAllPersonServiceAccesses();
@@ -102,6 +135,11 @@ public class PersonAccessServiceImpl extends BaseOpenmrsService implements Perso
             PersonServiceAccess personServiceAccess) {
         return dao.savePersonServiceAccess(personServiceAccess);
     }
-
-
+    
+    @Override
+    public List<PersonServiceAccess> getPersonServiceAccessesByAccessorId(
+            Integer accessorId) {
+        return null;
+    }
+    
 }
