@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +52,7 @@ public class AccessMonitorManageController {
 
     protected final Log log = LogFactory.getLog(getClass());
     protected Map<String, Integer> vehicles = new HashMap<String, Integer>();
+    protected String title = "Person Access Counts";
     protected String xAxisLabel = "Person Access Properties";
     protected boolean init = true;
     
@@ -82,34 +84,41 @@ public class AccessMonitorManageController {
         model.addAttribute("personServiceAccess", new PersonServiceAccess());
         model.addAttribute("orderServiceAccess", new OrderServiceAccess());
         model.addAttribute("visitServiceAccess", new VisitServiceAccess());
-        //model.addAttribute("test", "this is a test");
     }
 
     @RequestMapping(value = "/module/accessmonitor/manage", method = RequestMethod.POST)
     public void postSave(ModelMap model, HttpServletRequest req) throws IOException {
-
+        // for debug
         System.out.println(req.getParameter("datepickerFrom"));
         System.out.println(req.getParameter("datepickerTo"));
         System.out.println(req.getParameter("xaxis"));
         
+        // clean date info from title
+        title = "Person Access Counts";
         // Get dates from input
         Date from = null;
         Date to = null;
-        // parse them to Date
+        // parse them to Date, update tile
         DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         try {
             from = format.parse(req.getParameter("datepickerFrom"));
         } catch (Exception e) {
             System.out.println("======From Empty===========");
         }
+        if (from != null) {
+            title += " after " + format.format(from);
+        }
+        
         try {
             to = format.parse(req.getParameter("datepickerTo"));
         } catch (Exception e) {
             System.out.println("======To Empty===========");
         }
+        if (to != null) {
+            title += " before " + format.format(to);
+        }
         
-        xAxisLabel = req.getParameter("xaxis");//y:"accessId"
-        //String yValue = req.getParameter("dataInput");
+        xAxisLabel = req.getParameter("xaxis");
         
         // get all the records in the date frame
         List<PersonServiceAccess> list = Context.getService(PersonAccessService.class)
@@ -130,14 +139,6 @@ public class AccessMonitorManageController {
                     vehicles.put(accessorId, new Integer(1));
                 }
             }
-//            Integer accessorId = new Integer(0);
-//            try {
-//                accessorId = Integer.parseInt(yValue);
-//            } catch (Exception e) {
-//                System.out.println("========invalid input=======");
-//            }
-//            list = Context.getService(PersonAccessService.class)
-//                    .getPersonServiceAccessesByAccessorId(accessorId, from, to);
         } else if (xAxisLabel.equals("Person Id")) {
             for (PersonServiceAccess pAccess : list) {
                 if (pAccess.getPersonId() == null) continue;
@@ -150,14 +151,6 @@ public class AccessMonitorManageController {
                     vehicles.put(personId, new Integer(1));
                 }
             }
-//            int personId = 0;
-//            try {
-//                personId = Integer.parseInt(yValue);
-//            } catch (Exception e) {
-//                System.out.println("========invalid input=======");
-//            }
-//            list = Context.getService(PersonAccessService.class)
-//                    .getPersonServiceAccessesByPersonId(personId, from, to);
         } else if (xAxisLabel.equals("Access Type")) {
             for (PersonServiceAccess pAccess : list) {
                 String accessType = pAccess.getAccessType().toString();
@@ -169,8 +162,6 @@ public class AccessMonitorManageController {
                     vehicles.put(accessType, new Integer(1));
                 }
             }
-//            list = Context.getService(PersonAccessService.class)
-//                    .getPersonServiceAccessesByAccessType(yValue, from, to);
         } else {
             // do nothing!!
         }
@@ -178,14 +169,10 @@ public class AccessMonitorManageController {
         init = false;
         
         model.addAttribute("user", Context.getAuthenticatedUser());
-        model.addAttribute("tables1", tables1);
+        model.addAttribute("tables1", list);
         model.addAttribute("tables2", tables2);
         model.addAttribute("tables3", tables3);
       
-//        Double num = new Double(0.0);
-//        if (list != null) {
-//            defaultModel.put("111", (Double) num);
-//        }
     }
 
     @RequestMapping(value = "/module/accessmonitor/chart", method = RequestMethod.GET)
@@ -195,16 +182,14 @@ public class AccessMonitorManageController {
         if (init) {
             vehicles.clear();
             xAxisLabel = "Person Access Properties";
+            title = "Person Access Counts";
         }
         else {
             init = true;
         }
         
         RangeChartView lineGraph = new RangeChartView();
-        //XYSeriesCollection dataset = new XYSeriesCollection();
-        //dataset = (XYSeriesCollection) lineGraph.createDataset(vehicles);
-        //JFreeChart chart = lineGraph.createChart(dataset);
-        JFreeChart chart = lineGraph.createPersonChart(vehicles, xAxisLabel);
+        JFreeChart chart = lineGraph.createPersonChart(vehicles, title, xAxisLabel);
         ChartRenderingInfo info = null;
         info = new ChartRenderingInfo(new StandardEntityCollection());
         response.setContentType("image/png");
