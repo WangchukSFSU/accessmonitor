@@ -6,8 +6,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.module.accessmonitor.OrderServiceAccess;
+import org.openmrs.module.accessmonitor.VisitServiceAccess;
 import org.openmrs.module.accessmonitor.api.db.OrderAccessDAO;
 
 
@@ -114,6 +116,167 @@ public class HibernateOrderAccessDAO implements OrderAccessDAO {
             OrderServiceAccess orderServiceAccess) {
         sessionFactory.getCurrentSession().saveOrUpdate(orderServiceAccess);
         return orderServiceAccess;
+    }
+
+    @Override
+    public List<OrderServiceAccess> getOrderAccessesByAccessDateOrderByPatientId(
+            Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                OrderServiceAccess.class);
+        crit.addOrder(Order.asc("patientId"));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+
+    @Override
+    public List<OrderServiceAccess> getOrderServiceAccessesByAccessorId(
+            Integer accessorId, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                OrderServiceAccess.class);
+        crit.add(Restrictions.eq("accessorId", accessorId));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+
+    @Override
+    public List<OrderServiceAccess> getOrderServiceAccessesByPatientId(
+            Integer patientId, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                OrderServiceAccess.class);
+        crit.add(Restrictions.eq("patientId", patientId));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+
+    @Override
+    public List<OrderServiceAccess> getOrderServiceAccessesByUserId(
+            Integer userId, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                OrderServiceAccess.class);
+        crit.add(Restrictions.eq("userId", userId));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+
+    @Override
+    public List<OrderServiceAccess> getOrderServiceAccessesByOrderId(
+            Integer orderId, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                OrderServiceAccess.class);
+        crit.add(Restrictions.eq("orderId", orderId));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+
+    @Override
+    public List<OrderServiceAccess> getOrderServiceAccessesByOrderType(
+            String orderType, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                OrderServiceAccess.class);
+        crit.add(Restrictions.eq("orderType", orderType));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+
+    @Override
+    public List<OrderServiceAccess> getOrderServiceAccessesByAccessType(
+            String accessType, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                OrderServiceAccess.class);
+        crit.add(Restrictions.eq("accessType", accessType));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+
+    @Override
+    public List<OrderServiceAccess> getOrderServiceAccessesByOrderUuid(
+            String orderUuid, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                OrderServiceAccess.class);
+        crit.add(Restrictions.eq("orderUuid", orderUuid));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+
+    @Override
+    public List<OrderServiceAccess> getOrderServiceAccessesByAccessDate(
+            Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                OrderServiceAccess.class);
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
     }
     
 }

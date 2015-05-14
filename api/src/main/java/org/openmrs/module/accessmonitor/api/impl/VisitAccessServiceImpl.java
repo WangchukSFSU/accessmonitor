@@ -36,6 +36,55 @@ public class VisitAccessServiceImpl extends BaseOpenmrsService implements VisitA
     public VisitAccessDAO getDao() {
         return dao;
     }
+    
+    // New methods added on 5/13/2015
+    public List<VisitServiceAccess> getVisitAccessesByAccessDateOrderByPatientId(
+            Date from, Date to){
+        return dao.getVisitAccessesByAccessDateOrderByPatientId(from, to);
+    }
+    
+    // New methods added on 5/4/2015
+    public List<VisitServiceAccess> getVisitServiceAccessesByAccessorId(Integer accessorId, Date from, Date to) {
+        return dao.getVisitServiceAccessesByAccessorId(accessorId, from, to);
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByPatientId(Integer patientId, Date from, Date to) {
+        return dao.getVisitServiceAccessesByPatientId(patientId, from, to);
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVisitId(Integer visitId, Date from, Date to) {
+        return dao.getVisitServiceAccessesByVisitId(visitId, from, to);
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVisitType(String visitType, Date from, Date to) {
+        return dao.getVisitServiceAccessesByVisitType(visitType, from, to);
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByAccessType(String accessType, Date from, Date to) {
+        return dao.getVisitServiceAccessesByAccessType(accessType, from, to);
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVisitUuid(String visitUuid, Date from, Date to) {
+        return dao.getVisitServiceAccessesByVisitUuid(visitUuid, from, to);
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVoidReason(String voidReason, Date from, Date to) {
+        return dao.getVisitServiceAccessesByVoidReason(voidReason, from, to);
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByAccessDate(Date from, Date to) {
+        return dao.getVisitServiceAccessesByAccessDate(from, to);
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVisitStartDate(Date visitStartDate, Date from, Date to) {
+        return dao.getVisitServiceAccessesByVisitStartDate(visitStartDate, from, to);
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVisitEndDate(Date visitEndDate, Date from, Date to) {
+        return dao.getVisitServiceAccessesByVisitEndDate(visitEndDate, from, to);
+    }
+    
+    // old methods
 
     @Override
     public VisitServiceAccess getVisitServiceAccessById(Integer id) {

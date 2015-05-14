@@ -38,7 +38,7 @@
 	<a class="button" href="order.htm">Order</a>
 </div>
 <div style="padding-top:10px">
-	<span class="boxHeader">Person Access Statistics</span>
+	<span class="boxHeader">Visit Access Statistics</span>
 </div>
 
 <div>
@@ -65,13 +65,13 @@
 			google.load('visualization', '1', {packages: ['corechart']});
 			google.setOnLoadCallback(drawTooltipCharts);
 			
-			var personIds = ${personIds};
-			var personCounts = ${personCounts};
+			var patientIds = ${patientIds};
+			var patientCounts = ${patientCounts};
 			var dateSmall = ${dateSmallString};
 			
 			var primaryData = [];
-			for (var i = 0; i < personIds.length; i++) {
-				primaryData[i] = ["ID" + (i+1), personCounts[i]];
+			for (var i = 0; i < patientIds.length; i++) {
+				primaryData[i] = ["ID" + (i+1), patientCounts[i]];
 			}
 
 			var tooltipData = ${tooltipdata};
@@ -92,7 +92,7 @@
 			$("#datepickerFrom").val(getDateString("datepickerFrom"));
 			$("#datepickerTo").val(getDateString("datepickerTo"));
 			
-			var primaryTitle = 'Person Access for Each Person ID';
+			var primaryTitle = 'Visit Access for Each Patient ID';
 			if (getDateString("datepickerFrom")) {
 				primaryTitle = primaryTitle + " From " + getDateString("datepickerFrom");
 			}
@@ -108,7 +108,7 @@
 				
 			var options = function(idString) {
 				var tooltipOptions = {
-					title: 'Person Access for Person ID = ' + idString,
+					title: 'Visit Access for Patient ID = ' + idString,
 					legend: 'none'
 				};
 				return tooltipOptions;
@@ -125,7 +125,7 @@
 						var tooltipImg = '<img src="' + tooltipChart.getImageURI() + '">';
 						primaryData[i][2] = tooltipImg;
 					});
-					tooltipChart.draw(view, options(personIds[i]));
+					tooltipChart.draw(view, options(patientIds[i]));
 				}
 				drawPrimaryChart();
 			}

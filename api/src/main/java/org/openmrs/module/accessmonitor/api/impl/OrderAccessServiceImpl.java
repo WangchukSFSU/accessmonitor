@@ -24,6 +24,46 @@ public class OrderAccessServiceImpl extends BaseOpenmrsService implements OrderA
         return dao;
     }
     
+    // new methods
+    
+    public List<OrderServiceAccess> getOrderAccessesByAccessDateOrderByPatientId(Date from, Date to) {
+        return dao.getOrderAccessesByAccessDateOrderByPatientId(from, to);
+    }
+    
+    public List<OrderServiceAccess> getOrderServiceAccessesByAccessorId(Integer accessorId, Date from, Date to) {
+        return dao.getOrderServiceAccessesByAccessorId(accessorId, from, to);
+    }
+    
+    public List<OrderServiceAccess> getOrderServiceAccessesByPatientId(Integer patientId, Date from, Date to) {
+        return dao.getOrderServiceAccessesByPatientId(patientId, from, to);
+    }
+    
+    public List<OrderServiceAccess> getOrderServiceAccessesByUserId(Integer userId, Date from, Date to) {
+        return dao.getOrderServiceAccessesByUserId(userId, from, to);
+    }
+    
+    public List<OrderServiceAccess> getOrderServiceAccessesByOrderId(Integer orderId, Date from, Date to) {
+        return dao.getOrderServiceAccessesByOrderId(orderId, from, to);
+    }
+    
+    public List<OrderServiceAccess> getOrderServiceAccessesByOrderType(String orderType, Date from, Date to) {
+        return dao.getOrderServiceAccessesByOrderType(orderType, from, to);
+    }
+
+    public List<OrderServiceAccess> getOrderServiceAccessesByAccessType(String accessType, Date from, Date to) {
+        return dao.getOrderServiceAccessesByAccessType(accessType, from, to);
+    }
+    
+    public List<OrderServiceAccess> getOrderServiceAccessesByOrderUuid(String orderUuid, Date from, Date to) {
+        return dao.getOrderServiceAccessesByOrderUuid(orderUuid, from, to);
+    }
+    
+    public List<OrderServiceAccess> getOrderServiceAccessesByAccessDate(Date from, Date to) {
+        return dao.getOrderServiceAccessesByAccessDate(from, to);
+    }
+    
+    // old methods
+    
     @Override
     public OrderServiceAccess getOrderServiceAccessById(Integer id) {
         return dao.getOrderServiceAccessById(id);
@@ -86,5 +126,5 @@ public class OrderAccessServiceImpl extends BaseOpenmrsService implements OrderA
             OrderServiceAccess orderServiceAccess) {
         return dao.saveOrderServiceAccess(orderServiceAccess);
     }
-    
+
 }

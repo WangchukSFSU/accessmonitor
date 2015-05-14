@@ -11,7 +11,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.openmrs.module.accessmonitor.PersonServiceAccess;
 import org.openmrs.module.accessmonitor.VisitServiceAccess;
 import org.openmrs.module.accessmonitor.api.db.VisitAccessDAO;
 
@@ -41,6 +43,185 @@ public class HibernateVisitAccessDAO implements VisitAccessDAO{
     }
 
 
+ // New methods added on 5/13/2015
+    public List<VisitServiceAccess> getVisitAccessesByAccessDateOrderByPatientId(
+            Date from, Date to){
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                VisitServiceAccess.class);
+        crit.addOrder(Order.asc("patientId"));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    // New methods added on 5/4/2015
+    public List<VisitServiceAccess> getVisitServiceAccessesByAccessorId(Integer accessorId, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                VisitServiceAccess.class);
+        crit.add(Restrictions.eq("accessorId", accessorId));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByPatientId(Integer patientId, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                VisitServiceAccess.class);
+        crit.add(Restrictions.eq("patientId", patientId));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVisitId(Integer visitId, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                VisitServiceAccess.class);
+        crit.add(Restrictions.eq("visitId", visitId));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVisitType(String visitType, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                VisitServiceAccess.class);
+        crit.add(Restrictions.eq("visitType", visitType));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByAccessType(String accessType, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                VisitServiceAccess.class);
+        crit.add(Restrictions.eq("accessType", accessType));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVisitUuid(String visitUuid, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                VisitServiceAccess.class);
+        crit.add(Restrictions.eq("visitUuid", visitUuid));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVoidReason(String voidReason, Date from, Date to) {
+
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                VisitServiceAccess.class);
+        crit.add(Restrictions.eq("voidReason", voidReason));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list(); }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByAccessDate(Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                VisitServiceAccess.class);
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVisitStartDate(Date visitStartDate, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                VisitServiceAccess.class);
+        crit.add(Restrictions.eq("visitStartDate", visitStartDate));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    public List<VisitServiceAccess> getVisitServiceAccessesByVisitEndDate(Date visitEndDate, Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                VisitServiceAccess.class);
+        crit.add(Restrictions.eq("visitEndDate", visitEndDate));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
+    }
+    
+    // old
     @Override
      public VisitServiceAccess getVisitServiceAccessById(Integer id) {
         return (VisitServiceAccess) sessionFactory.getCurrentSession().get(VisitServiceAccess.class, id);

@@ -84,8 +84,24 @@
 				tooltipData[0][i] = "";
 			}
 			
+			var getDateString = function(name) {
+				if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      			return decodeURIComponent(name[1]);
+			}
+			
+			$("#datepickerFrom").val(getDateString("datepickerFrom"));
+			$("#datepickerTo").val(getDateString("datepickerTo"));
+			
+			var primaryTitle = 'Person Access for Each Person ID';
+			if (getDateString("datepickerFrom")) {
+				primaryTitle = primaryTitle + " From " + getDateString("datepickerFrom");
+			}
+			if (getDateString("datepickerTo")) {
+				primaryTitle = primaryTitle + " To " + getDateString("datepickerTo");
+			}
+			
 			var primaryOptions = {
-				title: 'Person Access for Each Person ID',
+				title: primaryTitle,
 				legend: 'none',
 				tooltip: {isHtml: true}
 			};
