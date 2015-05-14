@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.module.accessmonitor.PersonServiceAccess;
 import org.openmrs.module.accessmonitor.api.db.PersonAccessDAO;
@@ -43,6 +44,24 @@ public class HibernatePersonAccessDAO implements PersonAccessDAO {
      */
     public SessionFactory getSessionFactory() {
 	    return sessionFactory;
+    }
+    
+    // New methods added on 5/13/2015
+    public List<PersonServiceAccess> getPersonAccessesByAccessDateOrderByPersonId(
+            Date from, Date to) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+                PersonServiceAccess.class);
+        crit.addOrder(Order.asc("personId"));
+        if (from != null || to != null) {
+            if (from == null) {
+                crit.add(Restrictions.le("accessDate", to));
+            } else if (to == null) {
+                crit.add(Restrictions.ge("accessDate", from));
+            } else {
+                crit.add(Restrictions.between("accessDate", from, to));
+            }
+        }
+        return crit.list();
     }
     
     // New methods added on 5/4/2015

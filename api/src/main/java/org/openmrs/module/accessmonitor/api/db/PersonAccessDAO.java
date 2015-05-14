@@ -26,6 +26,10 @@ public interface PersonAccessDAO {
      * Add DAO methods here
      */
     
+    // New methods added on 5/13/2015
+    public List<PersonServiceAccess> getPersonAccessesByAccessDateOrderByPersonId(
+            Date from, Date to);
+    
     // New methods added on 5/4/2015
     public List<PersonServiceAccess> getPersonServiceAccessesByAccessDate(
             Date from, Date to);

@@ -47,6 +47,12 @@ public class PersonAccessServiceImpl extends BaseOpenmrsService implements
         return dao;
     }
     
+    // New methods added on 5/13/2015
+    public List<PersonServiceAccess> getPersonAccessesByAccessDateOrderByPersonId(
+            Date from, Date to) {
+        return dao.getPersonAccessesByAccessDateOrderByPersonId(from, to);
+    }
+    
     // New methods added on 5/4/2015
     public List<PersonServiceAccess> getPersonServiceAccessesByAccessDate(
             Date from, Date to) {

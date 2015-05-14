@@ -49,6 +49,7 @@ public class PersonServiceAdvice implements MethodBeforeAdvice {
             accessRecord = new PersonServiceAccess();
             Person person = (Person)os[0];
             accessRecord.setPersonId(person.getId());
+            accessRecord.setPersonUuid(person.getUuid());
             if(person.getId()==null){
                 accessRecord.setAccessType("New Person");
             } else {
@@ -59,18 +60,21 @@ public class PersonServiceAdvice implements MethodBeforeAdvice {
             accessRecord = new PersonServiceAccess();
             Person person = (Person)os[0];
             accessRecord.setPersonId(person.getId());
+            accessRecord.setPersonUuid(person.getUuid());
             accessRecord.setAccessType("Purge Person");
             Context.getService(PersonAccessService.class).savePersonServiceAccess(accessRecord);
         } else if(method.getName().equals("unvoidPerson")){
             accessRecord = new PersonServiceAccess();
             Person person = (Person)os[0];
             accessRecord.setPersonId(person.getId());
+            accessRecord.setPersonUuid(person.getUuid());
             accessRecord.setAccessType("Un-void Person");
             Context.getService(PersonAccessService.class).savePersonServiceAccess(accessRecord);
         } else if(method.getName().equals("voidPerson")){
             accessRecord = new PersonServiceAccess();
             Person person = (Person)os[0];
             accessRecord.setPersonId(person.getId());
+            accessRecord.setPersonUuid(person.getUuid());
             accessRecord.setAccessType("Void Person");
             Context.getService(PersonAccessService.class).savePersonServiceAccess(accessRecord);
         }

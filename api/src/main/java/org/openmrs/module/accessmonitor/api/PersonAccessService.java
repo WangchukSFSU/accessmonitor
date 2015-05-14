@@ -37,6 +37,10 @@ public interface PersonAccessService extends OpenmrsService {
      * Add service methods here
      */
     
+    // New methods added on 5/13/2015
+    public List<PersonServiceAccess> getPersonAccessesByAccessDateOrderByPersonId(
+            Date from, Date to);
+    
     // New methods added on 5/4/2015
     public List<PersonServiceAccess> getPersonServiceAccessesByAccessDate(
             Date from, Date to);
@@ -56,6 +60,7 @@ public interface PersonAccessService extends OpenmrsService {
     public List<PersonServiceAccess> getPersonServiceAccessesByVoidReason(
             String voidReason, Date from, Date to);
     
+    // Old methods
     public PersonServiceAccess getPersonServiceAccessById(Integer id);
     
     public List<PersonServiceAccess> getPersonServiceAccessesByAccessorId(
