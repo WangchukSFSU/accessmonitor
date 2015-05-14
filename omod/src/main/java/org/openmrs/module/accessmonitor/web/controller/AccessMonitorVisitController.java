@@ -113,6 +113,8 @@ public class AccessMonitorVisitController {
             String idString = (va.getPatientId() == null) ? "No ID" : va.getPatientId().toString();
             int index = patientIds.indexOf(idString);
             if (index < 0) {
+                if (patientIds.size() >= SHOWNUM)
+                    break;
                 patientIds.add(idString);
                 patientCounts.add(1);
                 index = patientIds.size() - 1;//index = patientIds.indexOf(idString);

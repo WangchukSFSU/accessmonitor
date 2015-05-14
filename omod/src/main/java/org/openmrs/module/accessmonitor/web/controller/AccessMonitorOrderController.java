@@ -24,9 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONValue;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.accessmonitor.OrderServiceAccess;
-import org.openmrs.module.accessmonitor.PersonServiceAccess;
 import org.openmrs.module.accessmonitor.api.OrderAccessService;
-import org.openmrs.module.accessmonitor.api.PersonAccessService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -115,6 +113,8 @@ public class AccessMonitorOrderController {
             String idString = (oa.getPatientId() == null) ? "No ID" : oa.getPatientId().toString();
             int index = patientIds.indexOf(idString);
             if (index < 0) {
+                if (patientIds.size() >= SHOWNUM)
+                    break;
                 patientIds.add(idString);
                 patientCounts.add(1);
                 index = patientIds.size() - 1;//index = personIds.indexOf(idString);

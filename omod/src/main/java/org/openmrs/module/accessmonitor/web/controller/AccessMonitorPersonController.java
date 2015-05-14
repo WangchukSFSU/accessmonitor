@@ -113,6 +113,8 @@ public class AccessMonitorPersonController {
             String idString = (pa.getPersonId() == null) ? "No ID" : pa.getPersonId().toString();
             int index = personIds.indexOf(idString);
             if (index < 0) {
+                if (personIds.size() >= SHOWNUM)
+                    break;
                 personIds.add(idString);
                 personCounts.add(1);
                 index = personIds.size() - 1;//index = personIds.indexOf(idString);
