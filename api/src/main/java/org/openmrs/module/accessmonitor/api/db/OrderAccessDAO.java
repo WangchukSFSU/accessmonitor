@@ -49,4 +49,7 @@ public interface OrderAccessDAO {
     public List<OrderServiceAccess> getAllOrderServiceAccesses();
     
     public OrderServiceAccess saveOrderServiceAccess(OrderServiceAccess orderServiceAccess);
+
+    //public void generateData();
+
 }

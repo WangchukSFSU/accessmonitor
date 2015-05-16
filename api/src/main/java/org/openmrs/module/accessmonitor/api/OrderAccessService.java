@@ -50,4 +50,7 @@ public interface OrderAccessService extends OpenmrsService {
     public List<OrderServiceAccess> getAllOrderServiceAccesses();
     
     public OrderServiceAccess saveOrderServiceAccess(OrderServiceAccess orderServiceAccess);
+
+    //public void generateData();
+
 }

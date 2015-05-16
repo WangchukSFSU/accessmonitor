@@ -76,4 +76,6 @@ public interface PersonAccessDAO {
     
     public PersonServiceAccess savePersonServiceAccess(
             PersonServiceAccess personServiceAccess);
+    
+    //public void generateData();
 }

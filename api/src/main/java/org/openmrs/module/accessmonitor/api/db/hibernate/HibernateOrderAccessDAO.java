@@ -1,7 +1,10 @@
 package org.openmrs.module.accessmonitor.api.db.hibernate;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
@@ -9,7 +12,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.module.accessmonitor.OrderServiceAccess;
-import org.openmrs.module.accessmonitor.VisitServiceAccess;
 import org.openmrs.module.accessmonitor.api.db.OrderAccessDAO;
 
 
@@ -278,5 +280,29 @@ public class HibernateOrderAccessDAO implements OrderAccessDAO {
         }
         return crit.list();
     }
+    
+//    public void generateData() {
+//        Random r = new Random();
+//        
+//        String[] at = {"Void Order", "Purge Order","New Order","Update Order", "Un-Void Order", "Un-Discontinue Order"};
+//        Calendar c = Calendar.getInstance();
+//        r.setSeed(c.getTimeInMillis());
+//        long end = c.getTimeInMillis();
+//        c.set(2013, 0, 1);
+//        long start = c.getTimeInMillis();
+//        for (int i = 0; i < 10000; i++) {
+//            OrderServiceAccess o = new OrderServiceAccess();
+//            long date = start + r.nextLong() % (end - start);
+//            c.setTimeInMillis(date);
+//            o.setAccessDate(c.getTime());
+//            o.setAccessorId(r.nextInt(10));
+//            o.setAccessType(at[r.nextInt(6)]);
+//            o.setOrderId(r.nextInt(5000));
+//            o.setPatientId(r.nextInt(8000)+1000);
+//            o.setUserId(r.nextInt(1000));
+//            saveOrderServiceAccess(o);
+//        }
+//        
+//    }
     
 }

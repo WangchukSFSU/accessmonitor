@@ -24,7 +24,11 @@ import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONValue;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.accessmonitor.VisitServiceAccess;
+import org.openmrs.module.accessmonitor.api.OrderAccessService;
+import org.openmrs.module.accessmonitor.api.PersonAccessService;
 import org.openmrs.module.accessmonitor.api.VisitAccessService;
+import org.openmrs.module.accessmonitor.api.impl.PersonAccessServiceImpl;
+import org.openmrs.module.accessmonitor.api.impl.VisitAccessServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,11 +45,17 @@ public class AccessMonitorVisitController {
     private final int DAYNUM = 30;
     private final int SHOWNUM = 20;
     
+    private int offset = 0;
+    
     List<VisitServiceAccess> visitAccessData;
 
     @RequestMapping(value = "/module/accessmonitor/visit", method = RequestMethod.GET)
     public void person(ModelMap model, HttpServletRequest request) {
         
+//        ((OrderAccessService) Context.getService(OrderAccessService.class)).generateData();
+//        ((VisitAccessService) Context.getService(VisitAccessService.class)).generateData();
+//        ((PersonAccessService) Context.getService(PersonAccessService.class)).generateData();
+        offset = 0;
         // parse them to Date, null is acceptabl
         DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         // Get the from date and to date
@@ -140,13 +150,125 @@ public class AccessMonitorVisitController {
         
         
         model.addAttribute("user", Context.getAuthenticatedUser());
-        model.addAttribute("tables1", visitAccessData);
-        model.addAttribute("dateSmall", dateStrings);
+//        model.addAttribute("tables1", visitAccessData);
+//        model.addAttribute("dateSmall", dateStrings);
+        model.addAttribute("currentoffset", String.valueOf(offset));
     }
 
     @RequestMapping(value = "/module/accessmonitor/visit", method = RequestMethod.POST)
     public void postSave(ModelMap model, HttpServletRequest request) throws IOException {
        
+        if (request.getParameter("offset") != null) {
+            offset = Integer.parseInt(request.getParameter("offset"));
+        }
+        int count = -1;
+        // parse them to Date, null is acceptabl
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        // Get the from date and to date
+        Date to = null;
+        Date from = null;
+        try {
+            from = format.parse(request.getParameter("datepickerFrom"));
+        } catch (Exception e) {
+            //System.out.println("======From Date Empty=======");
+        }
+        try {
+            to = format.parse(request.getParameter("datepickerTo"));
+        } catch (Exception e) {
+            //System.out.println("======To Date Empty=======");
+        }
+        
+        if (visitAccessData == null || visitAccessData.size() == 0) {
+        // get all the records in the date range
+            visitAccessData = ((VisitAccessService) Context.getService(VisitAccessService.class))
+                    .getVisitAccessesByAccessDateOrderByPatientId(from, to);
+            if (visitAccessData == null) {
+                visitAccessData = new ArrayList<VisitServiceAccess>();
+            }
+        }
+        
+        // get date for small graph
+        Date toSmall = to;
+        Date fromSmall = null;
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1);
+        if (toSmall == null) {
+            toSmall = calendar.getTime();
+        } else {
+            calendar.setTime(toSmall);
+        }
+        calendar.add(Calendar.DATE, - DAYNUM);
+        fromSmall = calendar.getTime();
+        
+        List<String> dateStrings = new ArrayList<String>();
+        for (int i = 0; i < DAYNUM; i++) {
+            if (i == DAYNUM - 1) {
+                dateStrings.add(format.format(toSmall));
+            } else if (i == 0) {
+                dateStrings.add(format.format(fromSmall));
+            } else {
+                dateStrings.add("");
+            }
+        }
+        
+        ArrayList<ArrayList<Integer>> tooltip = new ArrayList<ArrayList<Integer>>();
+        tooltip.add(new ArrayList<Integer>());
+        for (int j = 0; j < SHOWNUM + 1; j++) {
+            tooltip.get(0).add(1000+j);
+        }
+        for (int i = 1; i < DAYNUM + 1; i++) {
+            tooltip.add(new ArrayList<Integer>());
+            tooltip.get(i).add(i);
+            for (int j = 0; j < SHOWNUM; j++) {
+                tooltip.get(i).add(0);
+            }
+        }
+
+        ArrayList<String> patientIds = new ArrayList<String>();
+        ArrayList<Integer> patientCounts = new ArrayList<Integer>();
+        String last = "";
+        for (VisitServiceAccess va : visitAccessData) {
+            // data for big graph
+            String idString = (va.getPatientId() == null) ? "No ID" : va.getPatientId().toString();
+            if (!idString.equals(last)) {
+                count++;
+                last = idString;
+            }
+            int index = patientIds.indexOf(idString);
+            if (index < 0) {
+                if (count < offset)
+                    continue;
+                if (patientIds.size() >= SHOWNUM)
+                    break;
+                patientIds.add(idString);
+                patientCounts.add(1);
+                index = patientIds.size() - 1;//index = patientIds.indexOf(idString);
+            } else {
+                patientCounts.set(index, patientCounts.get(index) + 1);
+            }
+            // data for small graph
+            if (va.getAccessDate().after(fromSmall) && 
+                    va.getAccessDate().before(toSmall)) {
+                int index2 = (int) ((va.getAccessDate().getTime() - fromSmall.getTime()) / (1000 * 60 * 60 * 24));
+                if (index2 < DAYNUM && index2 >= 0)
+                    tooltip.get(index2 + 1).set(index + 1, tooltip.get(index2 + 1).get(index + 1) + 1);
+            }
+        }
+        String patientIdString = JSONValue.toJSONString(patientIds);
+        String patientCountString = JSONValue.toJSONString(patientCounts);
+        String dateSmallString = JSONValue.toJSONString(dateStrings);
+        String tooltipdata = JSONValue.toJSONString(tooltip);
+        model.addAttribute("patientIds", patientIdString);
+        model.addAttribute("patientCounts", patientCountString);
+        model.addAttribute("dateSmallString", dateSmallString);
+        model.addAttribute("tooltipdata", tooltipdata);
+        
+        
+        model.addAttribute("user", Context.getAuthenticatedUser());
+//        model.addAttribute("tables1", visitAccessData);
+//        model.addAttribute("dateSmall", dateStrings);
+        model.addAttribute("currentoffset", String.valueOf(offset));
+        
     }
 
 }

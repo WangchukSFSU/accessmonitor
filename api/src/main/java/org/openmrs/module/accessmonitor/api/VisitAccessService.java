@@ -71,4 +71,6 @@ public interface VisitAccessService extends OpenmrsService{
     
     public VisitServiceAccess saveVisitServiceAccess(VisitServiceAccess visitServiceAccess);
 
+    //public void generateData();
+
     }

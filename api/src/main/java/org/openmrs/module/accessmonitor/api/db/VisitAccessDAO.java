@@ -67,4 +67,5 @@ public interface VisitAccessDAO {
     
     public VisitServiceAccess saveVisitServiceAccess(VisitServiceAccess visitServiceAccess);
 
+    //public void generateData();
 }

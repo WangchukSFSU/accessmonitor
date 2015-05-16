@@ -155,6 +155,29 @@
 <div id="hidden_div" style="display:none"></div>
 <div id="visible_div" style="height:300px"></div>
 		
+<div>
+	<form action="" method="post" class="box">
+		<table cellspacing="0" width="100%">
+			<tr>
+				<td style="width:12%">
+					<label for="offset">Go to Patient (in ID order): </label>
+					<input type="text" name="offset" id="offset" value="" />
+					<input type="submit" value="  Go!  " />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+		<script type="text/javascript">
+			
+			var currentoffset = ${currentoffset};
+			var num = 0;
+			if (currentoffset) {
+				num = parseInt(currentoffset);
+			}
+			$('#offset').val(num);
+		</script>
 		
 <script>
 	$(function () {

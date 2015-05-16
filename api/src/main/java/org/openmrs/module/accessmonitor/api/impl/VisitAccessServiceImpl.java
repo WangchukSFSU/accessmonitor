@@ -150,4 +150,8 @@ public class VisitAccessServiceImpl extends BaseOpenmrsService implements VisitA
     public VisitServiceAccess saveVisitServiceAccess(VisitServiceAccess visitServiceAccess) {
         return dao.saveVisitServiceAccess(visitServiceAccess);
     }
+    
+//    public void generateData() {
+//        dao.generateData();
+//    }
 }

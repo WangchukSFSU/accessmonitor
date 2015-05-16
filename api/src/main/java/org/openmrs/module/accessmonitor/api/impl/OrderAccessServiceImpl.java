@@ -126,5 +126,9 @@ public class OrderAccessServiceImpl extends BaseOpenmrsService implements OrderA
             OrderServiceAccess orderServiceAccess) {
         return dao.saveOrderServiceAccess(orderServiceAccess);
     }
+    
+//    public void generateData() {
+//        dao.generateData();
+//    }
 
 }

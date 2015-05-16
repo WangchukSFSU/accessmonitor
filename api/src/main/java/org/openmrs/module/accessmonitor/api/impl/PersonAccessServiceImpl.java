@@ -148,4 +148,8 @@ public class PersonAccessServiceImpl extends BaseOpenmrsService implements
         return null;
     }
     
+//    public void generateData() {
+//        dao.generateData();
+//    }
+    
 }

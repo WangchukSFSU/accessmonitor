@@ -5,15 +5,16 @@
  */
 package org.openmrs.module.accessmonitor.api.db.hibernate;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.openmrs.module.accessmonitor.PersonServiceAccess;
 import org.openmrs.module.accessmonitor.VisitServiceAccess;
 import org.openmrs.module.accessmonitor.api.db.VisitAccessDAO;
 
@@ -315,11 +316,31 @@ public class HibernateVisitAccessDAO implements VisitAccessDAO{
         return crit.list();
     }
 
-        @Override
+    @Override
     public VisitServiceAccess saveVisitServiceAccess(
             VisitServiceAccess visitServiceAccess) {
         sessionFactory.getCurrentSession().saveOrUpdate(visitServiceAccess);
         return visitServiceAccess;
     }
+
+//    @Override
+//    public void generateData() {
+//        Random r = new Random();
+//        
+//        Calendar c = Calendar.getInstance();
+//        r.setSeed(c.getTimeInMillis());
+//        long end = c.getTimeInMillis();
+//        c.set(2013, 0, 1);
+//        long start = c.getTimeInMillis();
+//        for (int i = 0; i < 10000; i++) {
+//            VisitServiceAccess o = new VisitServiceAccess();
+//            long date = start + r.nextLong() % (end - start);
+//            c.setTimeInMillis(date);
+//            o.setAccessDate(c.getTime());
+//            o.setAccessorId(r.nextInt(10));
+//            o.setPatientId(r.nextInt(8000)+1000);
+//            saveVisitServiceAccess(o);
+//        }
+//    }
     
 }

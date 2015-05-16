@@ -88,5 +88,7 @@ public interface PersonAccessService extends OpenmrsService {
     
     public PersonServiceAccess savePersonServiceAccess(
             PersonServiceAccess personServiceAccess);
+
+    //public void generateData();
     
 }
