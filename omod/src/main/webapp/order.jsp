@@ -38,7 +38,7 @@
 	<a class="button" href="order.htm">Order</a>
 </div>
 <div style="padding-top:10px">
-	<span class="boxHeader">Person Access Statistics</span>
+	<span class="boxHeader">Order Access Statistics</span>
 </div>
 
 <div>
